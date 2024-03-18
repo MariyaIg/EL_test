@@ -1,4 +1,5 @@
-<%@ page import="com.ignateva.el_test.entity.User" %><%--
+<%@ page import="com.ignateva.el_test.entity.User" %>
+<%@ page import="static jdk.internal.org.jline.utils.InfoCmp.Capability.user1" %><%--
   Created by IntelliJ IDEA.
   User: Мария
   Date: 16.03.2024
@@ -12,7 +13,7 @@
     <title>Title</title>
 </head>
 <body>
-<form method = POST action="test-servlet" >
+<form method = POST action="${pageContext.request.contextPath}/test-servlet" >
     <div class="mb-3">
         <label>Имя</label><br>
         <input type="text" id="a" name ="F_name" value="${F_name}">
@@ -53,12 +54,18 @@
 <p>Фамилия: ${user[1]}</p>
 <p>Возраст: ${user[2]}</p>
 <p>Почта: ${user[3]}</p>
-<h4>вывод информации на этой же странице из сервлета через объект в строке</h4>
-<% if (request.getAttribute("user1")!=null)%>
-    <%=request.getAttribute("user1")%>
+<h4>вывод информации на этой же странице из сервлета через объект в строку</h4>
+<% if (request.getAttribute("userStr")!=null)%>
+    <%=request.getAttribute("userStr")%>
+<h4>вывод информации на этой же странице из сервлета через объект </h4>
+<%User user1=(User)request.getAttribute("user1");%>
+<p>Имя: ${user1.getF_name()}</p>
+<p>Фамилия: ${user1.getS_name()}</p>
+<p>Возраст: ${user1.getAge()}</p>
+<p>Почта: ${user1.getE_mail()}</p>
 <h4>вывод информации на этой же странице из сервлета через Cookie</h4>
-<p>Имя:${cookie.userFName.value}</p>
-<p>${param.userFName}</p>
+
+<p>Имя:${cookie.userFName.getValue()}</p>
 <a href="index.jsp">на главную</a>
 </body>
 </html>

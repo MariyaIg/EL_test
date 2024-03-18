@@ -16,27 +16,37 @@ import java.util.List;
 public class TestServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/user.jsp").forward(req,resp);
-        Cookie cookie=new Cookie("userFName",req.getParameter("F_name"));
-        resp.addCookie(cookie);
-    }
+        req.getRequestDispatcher("/user.jsp").forward(req, resp);
 
+    //cookie
+    Cookie cookie = new Cookie("userFName", req.getParameter("F_name"));
+        resp.addCookie(cookie);
+        cookie.setPath("/user.jsp");
+}
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 //через лист
         List<String> user = new ArrayList<>();
-       user.add(req.getParameter("F_name"));
-       user.add(req.getParameter("S_name"));
-       user.add(req.getParameter("age"));
-       user.add(req.getParameter("e_mail"));
-       req.setAttribute("user",user);
+        user.add(req.getParameter("F_name"));
+        user.add(req.getParameter("S_name"));
+        user.add(req.getParameter("age"));
+        user.add(req.getParameter("e_mail"));
+        req.setAttribute("user", user);
 //вариант через объект
         User user1 = new User();
-       user1.setF_name(req.getParameter("F_name"));
-       user1.setS_name(req.getParameter("S_name"));
-       user1.setAge(Integer.parseInt(req.getParameter("age")));
-       user1.setE_mail(req.getParameter("e_mail"));
-        req.setAttribute("user1",user1.toString());
-        getServletContext().getRequestDispatcher("/user.jsp").forward(req,resp);
+        user1.setF_name(req.getParameter("F_name"));
+        user1.setS_name(req.getParameter("S_name"));
+        user1.setAge(Integer.parseInt(req.getParameter("age")));
+        user1.setE_mail(req.getParameter("e_mail"));
+        req.setAttribute("userStr", user1.toString());
+        req.setAttribute("user1", user1);
+        ///
+        Cookie cookie = new Cookie("userFName", req.getParameter("F_name"));
+        resp.addCookie(cookie);
+        cookie.setPath("/user.jsp");
+
+        getServletContext().getRequestDispatcher("/user.jsp").forward(req, resp);
+
+
     }
 }
